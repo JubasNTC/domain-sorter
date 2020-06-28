@@ -1,0 +1,50 @@
+{
+  "name": "domain-sorter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "NODE_ENV=production babel src --out-dir dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "npx prettier --write '**/*.js'",
+    "lint": "eslint .",
+    "codestyle": "npm run prettier && npm run lint",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JubasNTC/domain-sorter.git"
+  },
+  "keywords": [
+    "domain-sorter",
+    "email:pass"
+  ],
+  "author": "JubasNTC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JubasNTC/domain-sorter/issues"
+  },
+  "homepage": "https://github.com/JubasNTC/domain-sorter#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/node": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
+    "prettier": "^2.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run codestyle"
+    }
+  }
+}
