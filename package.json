@@ -32,9 +32,12 @@
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.10.3",
     "@babel/node": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/preset-env": "^7.10.3",
+    "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
     "cross-env": "^7.0.2",
+    "eslint": "^7.3.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.2.5",
@@ -46,5 +49,9 @@
     "hooks": {
       "pre-commit": "npm run codestyle"
     }
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "validator": "^13.1.1"
   }
 }

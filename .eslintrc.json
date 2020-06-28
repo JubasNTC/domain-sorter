@@ -4,6 +4,7 @@
     "node": true
   },
   "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2020
   },
@@ -209,7 +210,7 @@
     ],
     "arrow-parens": [
       "error",
-      "as-needed"
+      "always"
     ],
     "arrow-body-style": [
       "error",
