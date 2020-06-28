@@ -10,7 +10,7 @@ class DomainSorter {
     this.#separator = separator;
   }
 
-  addLines = async (lines) => {
+  addLines = async (lines = []) => {
     for await (const line of lines) {
       const emailPass = this.normalizeLine(line);
       if (isNull(emailPass)) return;
@@ -41,6 +41,10 @@ class DomainSorter {
 
   getResult() {
     return this.#result;
+  }
+
+  clear() {
+    this.#result.clear();
   }
 }
 

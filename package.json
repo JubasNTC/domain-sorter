@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "build": "NODE_ENV=production babel src --out-dir dist",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --exit --colors test/**/*.test.js",
+    "coverage": "nyc npm run test",
     "prettier": "npx prettier --write '**/*.js'",
     "lint": "eslint .",
     "codestyle": "npm run prettier && npm run lint",
@@ -47,7 +48,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run codestyle"
+      "pre-commit": "npm run codestyle && npm test"
     }
   },
   "dependencies": {
