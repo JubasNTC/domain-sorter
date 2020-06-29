@@ -3,7 +3,7 @@ const { describe, it } = require('mocha');
 const DomainSorter = require('../src');
 
 describe('Class DomainSorter', () => {
-  describe('Add new lines', () => {
+  describe('Add full valid lines', () => {
     it('When add new lines, they are expected to be added to the sorted list', async () => {
       const mockLines = [
         'ETHAN.mccall2011@gmail.com:soulribbon1',
@@ -60,18 +60,70 @@ describe('Class DomainSorter', () => {
     });
   });
 
+  describe('Add part valid lines', () => {
+    it('When add part valid lines, they are expected to be added to the sorted list', async () => {
+      const mockLines = [
+        'ETHAN.mccall2011@gmail.com:soulribbon1',
+        'christina.hagan@gmail.com',
+        'Jasonmontoya14@icloud.com:jason123eA',
+        'clAWn14@gmail.com:Clawnkrimeric6',
+        '',
+        null,
+        2,
+        'ebbecor101yahoo.com:Ebben129',
+      ];
+
+      const expected = new Map([
+        [
+          'gmail.com',
+          new Set([
+            'ethan.mccall2011@gmail.com:soulribbon1',
+            'clawn14@gmail.com:Clawnkrimeric6',
+          ]),
+        ],
+        ['icloud.com', new Set(['jasonmontoya14@icloud.com:jason123eA'])],
+      ]);
+
+      const domainSorter = new DomainSorter();
+      await domainSorter.addLines(mockLines);
+      const sortResult = domainSorter.getResult();
+
+      assert.deepEqual(expected, sortResult);
+    });
+  });
+
+  describe('Add all not valid lines', () => {
+    it('When add all not valid lines, then empty sorted list is expected', async () => {
+      const mockLines = [
+        'ETHAN.mccall2011@gmail.comdsoulribbon1',
+        'christina.hagan@gmail.com',
+        'Jasonmontoya14@icloudcom:jason123eA',
+        'clAWn14@gmail:Clawnkrimeric6',
+        '',
+        null,
+        2,
+        'ebbecor101yahoo.com:Ebben129',
+      ];
+      const expected = new Map();
+
+      const domainSorter = new DomainSorter();
+      await domainSorter.addLines(mockLines);
+      const sortResult = domainSorter.getResult();
+
+      assert.deepEqual(expected, sortResult);
+    });
+  });
+
   describe('Clear state instance class', () => {
     it('When clear state instance class, then expected empty Map', async () => {
       const mockLines = [
         'ETHAN.mccall2011@gmail.com:soulribbon1',
         'Jasonmontoya14@icloud.com:jason123eA',
       ];
-
       const expected = new Map();
 
       const domainSorter = new DomainSorter();
       await domainSorter.addLines(mockLines);
-
       domainSorter.clear();
       const cleared = domainSorter.getResult();
 
@@ -82,12 +134,13 @@ describe('Class DomainSorter', () => {
   describe('Normalize valid line', () => {
     it('When a valid line is specified, then an object consisting of a domain and a normalized line is expected', async () => {
       const mockLine = 'ETHAN.mccall2011@Gmail.com:soulribbon1';
-      const domainSorter = new DomainSorter();
-      const normalizedLine = domainSorter.normalizeLine(mockLine);
       const expected = {
         domain: 'gmail.com',
         normalizedLine: 'ethan.mccall2011@gmail.com:soulribbon1',
       };
+
+      const domainSorter = new DomainSorter();
+      const normalizedLine = domainSorter.normalizeLine(mockLine);
 
       assert.deepEqual(expected, normalizedLine);
     });
@@ -96,9 +149,10 @@ describe('Class DomainSorter', () => {
   describe('Normalize not valid line', () => {
     it('When a not valid line is specified, then null is expected', async () => {
       const mockLine = 'ETHAN.mccall2011:soulribbon1';
+      const expected = null;
+
       const domainSorter = new DomainSorter();
       const normalizedLine = domainSorter.normalizeLine(mockLine);
-      const expected = null;
 
       assert.deepEqual(expected, normalizedLine);
     });
