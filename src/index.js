@@ -1,5 +1,7 @@
-const { isNull } = require('lodash');
+const { isNull, isString } = require('lodash');
 const { isEmail } = require('validator');
+
+const COMMERCIAL_AT = '@';
 
 class DomainSorter {
   #result;
@@ -13,9 +15,11 @@ class DomainSorter {
   addLines = async (lines = []) => {
     for await (const line of lines) {
       const emailPass = this.normalizeLine(line);
-      if (isNull(emailPass)) return;
+      if (isNull(emailPass)) continue;
+
       const { domain, normalizedLine } = emailPass;
       const isExistDomain = this.#result.has(domain);
+
       if (isExistDomain) {
         this.#result.get(domain).add(normalizedLine);
       } else {
@@ -25,17 +29,21 @@ class DomainSorter {
   };
 
   normalizeLine = (line) => {
+    if (!isString(line)) return null;
+
     const [email, pass] = line.split(this.#separator);
-    const isValidLine = isEmail(email) && !!pass;
+    const isValidLine = isEmail(email) && isString(pass);
+
     if (isValidLine) {
       const normalizedEmail = email.toLowerCase();
-      const [, domain] = normalizedEmail.split('@');
+      const [, domain] = normalizedEmail.split(COMMERCIAL_AT);
       const normalizedLine = `${normalizedEmail}${this.#separator}${pass}`;
       return {
         domain,
         normalizedLine,
       };
     }
+
     return null;
   };
 
