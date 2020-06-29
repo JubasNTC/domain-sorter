@@ -21,7 +21,8 @@
   },
   "keywords": [
     "domain-sorter",
-    "email:pass"
+    "email:pass",
+    "node.js"
   ],
   "author": "JubasNTC",
   "license": "ISC",
