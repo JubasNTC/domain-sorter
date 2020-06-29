@@ -1,6 +1,6 @@
 # domain-sorter
 
-### A module for sorting "email:pass" data by domain and normalization
+### A module for sorting **email:pass** data by domain and normalization
 
 [![NPM](https://nodei.co/npm/domain-sorter.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/domain-sorter/)
 
